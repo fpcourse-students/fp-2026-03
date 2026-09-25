@@ -1,4 +1,6 @@
-# Fp. HwNN
+# Fp. Hw03. Просто типизированное лямбда-исчисление
+
+Домашка по типизированному λ-исчислению: наиболее общие типы, типизация по Чёрчу, население типов. Задания в `src/hw.lam`. Файл написан на `language typed`: связыватели можно аннотировать (`\x:(a -> a). x`), есть типы `Int` и `Bool`, литералы, операторы `+ - * < ==` и `if`, `true`, `false`. Интерпретатор к ним — [lambda-engine/TUTORIAL.md](lambda-engine/TUTORIAL.md): раздел 6 (типы) и 7–8 (правка файла и проверка).
 
 ## Установка
 
@@ -11,14 +13,6 @@ Linux и macOS:
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```
 
-На Linux компилятору нужны системные библиотеки, и без них установка или первая сборка падает с ошибкой про `gmp` или `tinfo`. На Ubuntu и Debian поставьте их заранее:
-
-```sh
-sudo apt install build-essential curl libffi-dev libgmp-dev libncurses-dev pkg-config
-```
-
-На старых версиях Ubuntu дополнительно нужен `libtinfo-dev`. Fedora: `sudo dnf install gcc gcc-c++ gmp gmp-devel make ncurses ncurses-devel xz perl`; Arch и Manjaro: `sudo pacman -S --needed base-devel gmp ncurses`; openSUSE: `sudo zypper install gcc gcc-c++ gmp-devel make ncurses-devel xz perl`. Полный список — на [странице установки ghcup](https://www.haskell.org/ghcup/install/#system-requirements). Если компилятор уже стоит, а первая сборка домашки падает с упоминанием `terminfo` или `tinfo`, не хватает именно `ncurses-devel` (`libncurses-dev`): его требует интерпретатор λ-термов.
-
 Windows (PowerShell, команда с сайта ghcup):
 
 ```powershell
@@ -26,14 +20,8 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;[System.Net.ServicePointManager
 ```
 
 Установщик задаст вопросы: соглашайтесь поставить GHC и cabal, HLS (Haskell Language Server) — по желанию, он даёт подсказки в редакторе.
-После установки откройте новый терминал и выберите версии по умолчанию, по одной команде на строку (в PowerShell `&&` не работает):
-
-```sh
-ghcup install ghc 9.10.3 --set
-ghcup install cabal recommended --set
-```
-
-Версия компилятора зафиксирована в `cabal.project`, поэтому другой компилятор сборка не примет. Вторая команда нужна, если `cabal` не находится или ghcup просит выбрать версию cabal по умолчанию: установщик иногда ставит cabal, но не назначает его текущим.
+После установки выберите нужную версию компилятора: `ghcup install ghc 9.10.3 && ghcup set ghc 9.10.3`.
+Версия зафиксирована в `cabal.project`, поэтому другой компилятор сборка не примет.
 
 В домашках по λ-исчислению линтера нет: там нет кода на Haskell, и `make check` его не запускает. В домашках на Haskell линтер подсказывает, как упростить код. На статус задач его подсказки не влияют, но `make check` показывает их каждый раз, а ревью на них смотрит.
 Быстрее всего взять готовый бинарник из [релизов hlint](https://github.com/ndmitchell/hlint/releases) (есть для Linux, macOS и Windows) и положить его в `PATH`; пакетный менеджер вашей системы тоже подойдёт. `cabal install hlint` работает, но собирает линтер из исходников долго.
